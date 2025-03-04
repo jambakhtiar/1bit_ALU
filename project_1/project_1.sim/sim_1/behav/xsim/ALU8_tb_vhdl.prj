@@ -1,0 +1,11 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../project_1.srcs/sources_1/new/ALU1.vhd" \
+"../../../../project_1.srcs/sources_1/new/ALU8.vhd" \
+"../../../../project_1.srcs/sources_1/new/FullAdder.vhd" \
+"../../../../project_1.srcs/sources_1/new/MUX2to1.vhd" \
+"../../../../project_1.srcs/sources_1/new/MUX4to1.vhd" \
+"../../../../project_1.srcs/sim_1/new/ALU8_tb.vhd" \
+
+# Do not sort compile order
+nosort

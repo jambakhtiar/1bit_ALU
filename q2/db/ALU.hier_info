@@ -1,0 +1,629 @@
+|ALU8
+A[0] => ALU1:ALU1_0.A
+A[1] => ALU1:ALU1_1.A
+A[2] => ALU1:ALU1_2.A
+A[3] => ALU1:ALU1_3.A
+A[4] => ALU1:ALU1_4.A
+A[5] => ALU1:ALU1_5.A
+A[6] => ALU1:ALU1_6.A
+A[7] => ALU1:ALU1_7.A
+A_in => ALU1:ALU1_0.A_inv
+A_in => ALU1:ALU1_1.A_inv
+A_in => ALU1:ALU1_2.A_inv
+A_in => ALU1:ALU1_3.A_inv
+A_in => ALU1:ALU1_4.A_inv
+A_in => ALU1:ALU1_5.A_inv
+A_in => ALU1:ALU1_6.A_inv
+A_in => ALU1:ALU1_7.A_inv
+B[0] => ALU1:ALU1_0.B
+B[1] => ALU1:ALU1_1.B
+B[2] => ALU1:ALU1_2.B
+B[3] => ALU1:ALU1_3.B
+B[4] => ALU1:ALU1_4.B
+B[5] => ALU1:ALU1_5.B
+B[6] => ALU1:ALU1_6.B
+B[7] => ALU1:ALU1_7.B
+B_inv => ALU1:ALU1_0.B_inv
+B_inv => ALU1:ALU1_1.B_inv
+B_inv => ALU1:ALU1_2.B_inv
+B_inv => ALU1:ALU1_3.B_inv
+B_inv => ALU1:ALU1_4.B_inv
+B_inv => ALU1:ALU1_5.B_inv
+B_inv => ALU1:ALU1_6.B_inv
+B_inv => ALU1:ALU1_7.B_inv
+CarryIn => ALU1:ALU1_0.CarryIn
+OP[0] => ALU1:ALU1_0.OP0
+OP[0] => ALU1:ALU1_1.OP0
+OP[0] => ALU1:ALU1_2.OP0
+OP[0] => ALU1:ALU1_3.OP0
+OP[0] => ALU1:ALU1_4.OP0
+OP[0] => ALU1:ALU1_5.OP0
+OP[0] => ALU1:ALU1_6.OP0
+OP[0] => ALU1:ALU1_7.OP0
+OP[1] => ALU1:ALU1_0.OP1
+OP[1] => ALU1:ALU1_1.OP1
+OP[1] => ALU1:ALU1_2.OP1
+OP[1] => ALU1:ALU1_3.OP1
+OP[1] => ALU1:ALU1_4.OP1
+OP[1] => ALU1:ALU1_5.OP1
+OP[1] => ALU1:ALU1_6.OP1
+OP[1] => ALU1:ALU1_7.OP1
+CarryOut <= ALU1:ALU1_7.CarryOut
+Result[0] <= ALU1:ALU1_0.Result
+Result[1] <= ALU1:ALU1_1.Result
+Result[2] <= ALU1:ALU1_2.Result
+Result[3] <= ALU1:ALU1_3.Result
+Result[4] <= ALU1:ALU1_4.Result
+Result[5] <= ALU1:ALU1_5.Result
+Result[6] <= ALU1:ALU1_6.Result
+Result[7] <= ALU1:ALU1_7.Result
+
+
+|ALU8|ALU1:ALU1_0
+A => MUX2to1:Mux1.I0
+A => MUX2to1:Mux1.I1
+A_inv => MUX2to1:Mux1.S
+B => MUX2to1:Mux2.I0
+B => MUX2to1:Mux2.I1
+B_inv => MUX2to1:Mux2.S
+CarryIn => FullAdder:Adder.Cin
+OP0 => MUX4x1:mux4_1.S0
+OP1 => MUX4x1:mux4_1.S1
+CarryOut <= FullAdder:Adder.Cout
+Result <= MUX4x1:mux4_1.O
+
+
+|ALU8|ALU1:ALU1_0|MUX2to1:Mux1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_0|MUX2to1:Mux2
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_0|FullAdder:Adder
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_0|MUX4x1:mux4_1
+I0 => MUX2to1:Mux2x1_0.I0
+I1 => MUX2to1:Mux2x1_0.I1
+I2 => MUX2to1:Mux2x1_1.I0
+I3 => MUX2to1:Mux2x1_1.I1
+S0 => MUX2to1:Mux2x1_0.S
+S0 => MUX2to1:Mux2x1_1.S
+S1 => MUX2to1:Mux2x1_final.S
+O <= MUX2to1:Mux2x1_final.O
+
+
+|ALU8|ALU1:ALU1_0|MUX4x1:mux4_1|MUX2to1:Mux2x1_0
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_0|MUX4x1:mux4_1|MUX2to1:Mux2x1_1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_0|MUX4x1:mux4_1|MUX2to1:Mux2x1_final
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_1
+A => MUX2to1:Mux1.I0
+A => MUX2to1:Mux1.I1
+A_inv => MUX2to1:Mux1.S
+B => MUX2to1:Mux2.I0
+B => MUX2to1:Mux2.I1
+B_inv => MUX2to1:Mux2.S
+CarryIn => FullAdder:Adder.Cin
+OP0 => MUX4x1:mux4_1.S0
+OP1 => MUX4x1:mux4_1.S1
+CarryOut <= FullAdder:Adder.Cout
+Result <= MUX4x1:mux4_1.O
+
+
+|ALU8|ALU1:ALU1_1|MUX2to1:Mux1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_1|MUX2to1:Mux2
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_1|FullAdder:Adder
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_1|MUX4x1:mux4_1
+I0 => MUX2to1:Mux2x1_0.I0
+I1 => MUX2to1:Mux2x1_0.I1
+I2 => MUX2to1:Mux2x1_1.I0
+I3 => MUX2to1:Mux2x1_1.I1
+S0 => MUX2to1:Mux2x1_0.S
+S0 => MUX2to1:Mux2x1_1.S
+S1 => MUX2to1:Mux2x1_final.S
+O <= MUX2to1:Mux2x1_final.O
+
+
+|ALU8|ALU1:ALU1_1|MUX4x1:mux4_1|MUX2to1:Mux2x1_0
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_1|MUX4x1:mux4_1|MUX2to1:Mux2x1_1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_1|MUX4x1:mux4_1|MUX2to1:Mux2x1_final
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_2
+A => MUX2to1:Mux1.I0
+A => MUX2to1:Mux1.I1
+A_inv => MUX2to1:Mux1.S
+B => MUX2to1:Mux2.I0
+B => MUX2to1:Mux2.I1
+B_inv => MUX2to1:Mux2.S
+CarryIn => FullAdder:Adder.Cin
+OP0 => MUX4x1:mux4_1.S0
+OP1 => MUX4x1:mux4_1.S1
+CarryOut <= FullAdder:Adder.Cout
+Result <= MUX4x1:mux4_1.O
+
+
+|ALU8|ALU1:ALU1_2|MUX2to1:Mux1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_2|MUX2to1:Mux2
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_2|FullAdder:Adder
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_2|MUX4x1:mux4_1
+I0 => MUX2to1:Mux2x1_0.I0
+I1 => MUX2to1:Mux2x1_0.I1
+I2 => MUX2to1:Mux2x1_1.I0
+I3 => MUX2to1:Mux2x1_1.I1
+S0 => MUX2to1:Mux2x1_0.S
+S0 => MUX2to1:Mux2x1_1.S
+S1 => MUX2to1:Mux2x1_final.S
+O <= MUX2to1:Mux2x1_final.O
+
+
+|ALU8|ALU1:ALU1_2|MUX4x1:mux4_1|MUX2to1:Mux2x1_0
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_2|MUX4x1:mux4_1|MUX2to1:Mux2x1_1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_2|MUX4x1:mux4_1|MUX2to1:Mux2x1_final
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_3
+A => MUX2to1:Mux1.I0
+A => MUX2to1:Mux1.I1
+A_inv => MUX2to1:Mux1.S
+B => MUX2to1:Mux2.I0
+B => MUX2to1:Mux2.I1
+B_inv => MUX2to1:Mux2.S
+CarryIn => FullAdder:Adder.Cin
+OP0 => MUX4x1:mux4_1.S0
+OP1 => MUX4x1:mux4_1.S1
+CarryOut <= FullAdder:Adder.Cout
+Result <= MUX4x1:mux4_1.O
+
+
+|ALU8|ALU1:ALU1_3|MUX2to1:Mux1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_3|MUX2to1:Mux2
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_3|FullAdder:Adder
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_3|MUX4x1:mux4_1
+I0 => MUX2to1:Mux2x1_0.I0
+I1 => MUX2to1:Mux2x1_0.I1
+I2 => MUX2to1:Mux2x1_1.I0
+I3 => MUX2to1:Mux2x1_1.I1
+S0 => MUX2to1:Mux2x1_0.S
+S0 => MUX2to1:Mux2x1_1.S
+S1 => MUX2to1:Mux2x1_final.S
+O <= MUX2to1:Mux2x1_final.O
+
+
+|ALU8|ALU1:ALU1_3|MUX4x1:mux4_1|MUX2to1:Mux2x1_0
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_3|MUX4x1:mux4_1|MUX2to1:Mux2x1_1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_3|MUX4x1:mux4_1|MUX2to1:Mux2x1_final
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_4
+A => MUX2to1:Mux1.I0
+A => MUX2to1:Mux1.I1
+A_inv => MUX2to1:Mux1.S
+B => MUX2to1:Mux2.I0
+B => MUX2to1:Mux2.I1
+B_inv => MUX2to1:Mux2.S
+CarryIn => FullAdder:Adder.Cin
+OP0 => MUX4x1:mux4_1.S0
+OP1 => MUX4x1:mux4_1.S1
+CarryOut <= FullAdder:Adder.Cout
+Result <= MUX4x1:mux4_1.O
+
+
+|ALU8|ALU1:ALU1_4|MUX2to1:Mux1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_4|MUX2to1:Mux2
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_4|FullAdder:Adder
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_4|MUX4x1:mux4_1
+I0 => MUX2to1:Mux2x1_0.I0
+I1 => MUX2to1:Mux2x1_0.I1
+I2 => MUX2to1:Mux2x1_1.I0
+I3 => MUX2to1:Mux2x1_1.I1
+S0 => MUX2to1:Mux2x1_0.S
+S0 => MUX2to1:Mux2x1_1.S
+S1 => MUX2to1:Mux2x1_final.S
+O <= MUX2to1:Mux2x1_final.O
+
+
+|ALU8|ALU1:ALU1_4|MUX4x1:mux4_1|MUX2to1:Mux2x1_0
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_4|MUX4x1:mux4_1|MUX2to1:Mux2x1_1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_4|MUX4x1:mux4_1|MUX2to1:Mux2x1_final
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_5
+A => MUX2to1:Mux1.I0
+A => MUX2to1:Mux1.I1
+A_inv => MUX2to1:Mux1.S
+B => MUX2to1:Mux2.I0
+B => MUX2to1:Mux2.I1
+B_inv => MUX2to1:Mux2.S
+CarryIn => FullAdder:Adder.Cin
+OP0 => MUX4x1:mux4_1.S0
+OP1 => MUX4x1:mux4_1.S1
+CarryOut <= FullAdder:Adder.Cout
+Result <= MUX4x1:mux4_1.O
+
+
+|ALU8|ALU1:ALU1_5|MUX2to1:Mux1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_5|MUX2to1:Mux2
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_5|FullAdder:Adder
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_5|MUX4x1:mux4_1
+I0 => MUX2to1:Mux2x1_0.I0
+I1 => MUX2to1:Mux2x1_0.I1
+I2 => MUX2to1:Mux2x1_1.I0
+I3 => MUX2to1:Mux2x1_1.I1
+S0 => MUX2to1:Mux2x1_0.S
+S0 => MUX2to1:Mux2x1_1.S
+S1 => MUX2to1:Mux2x1_final.S
+O <= MUX2to1:Mux2x1_final.O
+
+
+|ALU8|ALU1:ALU1_5|MUX4x1:mux4_1|MUX2to1:Mux2x1_0
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_5|MUX4x1:mux4_1|MUX2to1:Mux2x1_1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_5|MUX4x1:mux4_1|MUX2to1:Mux2x1_final
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_6
+A => MUX2to1:Mux1.I0
+A => MUX2to1:Mux1.I1
+A_inv => MUX2to1:Mux1.S
+B => MUX2to1:Mux2.I0
+B => MUX2to1:Mux2.I1
+B_inv => MUX2to1:Mux2.S
+CarryIn => FullAdder:Adder.Cin
+OP0 => MUX4x1:mux4_1.S0
+OP1 => MUX4x1:mux4_1.S1
+CarryOut <= FullAdder:Adder.Cout
+Result <= MUX4x1:mux4_1.O
+
+
+|ALU8|ALU1:ALU1_6|MUX2to1:Mux1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_6|MUX2to1:Mux2
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_6|FullAdder:Adder
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_6|MUX4x1:mux4_1
+I0 => MUX2to1:Mux2x1_0.I0
+I1 => MUX2to1:Mux2x1_0.I1
+I2 => MUX2to1:Mux2x1_1.I0
+I3 => MUX2to1:Mux2x1_1.I1
+S0 => MUX2to1:Mux2x1_0.S
+S0 => MUX2to1:Mux2x1_1.S
+S1 => MUX2to1:Mux2x1_final.S
+O <= MUX2to1:Mux2x1_final.O
+
+
+|ALU8|ALU1:ALU1_6|MUX4x1:mux4_1|MUX2to1:Mux2x1_0
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_6|MUX4x1:mux4_1|MUX2to1:Mux2x1_1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_6|MUX4x1:mux4_1|MUX2to1:Mux2x1_final
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_7
+A => MUX2to1:Mux1.I0
+A => MUX2to1:Mux1.I1
+A_inv => MUX2to1:Mux1.S
+B => MUX2to1:Mux2.I0
+B => MUX2to1:Mux2.I1
+B_inv => MUX2to1:Mux2.S
+CarryIn => FullAdder:Adder.Cin
+OP0 => MUX4x1:mux4_1.S0
+OP1 => MUX4x1:mux4_1.S1
+CarryOut <= FullAdder:Adder.Cout
+Result <= MUX4x1:mux4_1.O
+
+
+|ALU8|ALU1:ALU1_7|MUX2to1:Mux1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_7|MUX2to1:Mux2
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_7|FullAdder:Adder
+A => Sum.IN0
+A => Cout.IN0
+B => Sum.IN1
+B => Cout.IN1
+Cin => Sum.IN1
+Cin => Cout.IN1
+Sum <= Sum.DB_MAX_OUTPUT_PORT_TYPE
+Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_7|MUX4x1:mux4_1
+I0 => MUX2to1:Mux2x1_0.I0
+I1 => MUX2to1:Mux2x1_0.I1
+I2 => MUX2to1:Mux2x1_1.I0
+I3 => MUX2to1:Mux2x1_1.I1
+S0 => MUX2to1:Mux2x1_0.S
+S0 => MUX2to1:Mux2x1_1.S
+S1 => MUX2to1:Mux2x1_final.S
+O <= MUX2to1:Mux2x1_final.O
+
+
+|ALU8|ALU1:ALU1_7|MUX4x1:mux4_1|MUX2to1:Mux2x1_0
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_7|MUX4x1:mux4_1|MUX2to1:Mux2x1_1
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ALU8|ALU1:ALU1_7|MUX4x1:mux4_1|MUX2to1:Mux2x1_final
+I0 => O.DATAB
+I1 => O.DATAA
+S => O.OUTPUTSELECT
+O <= O.DB_MAX_OUTPUT_PORT_TYPE
+
+
